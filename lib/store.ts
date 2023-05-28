@@ -1,7 +1,7 @@
 import create from "zustand";
 import { CartSlice, createCartSlice } from "./slices/createCartSlice";
-import { createProductSlice, ProductSlice } from "./slices/createProductSlice";
-import { devtools, persist } from "zustand/middleware";
+import { ProductSlice, createProductSlice } from "./slices/createProductSlice";
+import { devtools } from "zustand/middleware";
 
 export type StoreState = ProductSlice & CartSlice;
 

@@ -20,12 +20,9 @@ export interface ProductSlice {
   fetchProducts: () => void;
 }
 
-export const createProductSlice: StateCreator<
-  StoreState,
-  [["zustand/devtools", never]],
-  [],
-  ProductSlice
-> = (set) => ({
+type CombinedStoreCreator<T> = StateCreator<StoreState, [["zustand/devtools", never]], [], T>;
+
+export const createProductSlice: CombinedStoreCreator<ProductSlice> = (set) => ({
   products: [],
   fetchProducts: async () => {
     const res = await fetch("https://api.escuelajs.co/api/v1/products?offset=0&limit=20");
