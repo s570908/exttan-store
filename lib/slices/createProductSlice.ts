@@ -1,28 +1,34 @@
 import { StateCreator } from "zustand";
+import { StoreState } from "../store";
 
 export interface Product {
-    category: {
-        id: number;
-        image: string;
-        name: string;
-    };
-    description: string;
+  category: {
     id: number;
-    images: string[];
-    price: number;
-    title: string;
-    quantity?: number;
+    image: string;
+    name: string;
+  };
+  description: string;
+  id: number;
+  images: string[];
+  price: number;
+  title: string;
+  quantity?: number;
 }
 
 export interface ProductSlice {
-    products: Product[];
-    fetchProducts: () => void;
+  products: Product[];
+  fetchProducts: () => void;
 }
 
-export const createProductSlice: StateCreator<ProductSlice> = (set) => ({
-    products: [],
-    fetchProducts: async () => {
-        const res = await fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=20')
-        set({ products: await res.json() })
-    },
-})
+export const createProductSlice: StateCreator<
+  StoreState,
+  [["zustand/devtools", never]],
+  [],
+  ProductSlice
+> = (set) => ({
+  products: [],
+  fetchProducts: async () => {
+    const res = await fetch("https://api.escuelajs.co/api/v1/products?offset=0&limit=20");
+    set({ products: await res.json() });
+  },
+});
