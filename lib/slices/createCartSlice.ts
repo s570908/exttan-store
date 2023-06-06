@@ -11,12 +11,9 @@ export interface CartSlice {
   toggleCart: () => void;
 }
 
-export const createCartSlice: StateCreator<
-  StoreState,
-  [["zustand/devtools", never]],
-  [],
-  CartSlice
-> = (set, get) => ({
+type CombinedStoreCreator<T> = StateCreator<StoreState, [["zustand/devtools", never]], [], T>;
+
+export const createCartSlice: CombinedStoreCreator<CartSlice> = (set, get) => ({
   cart: [],
   addToCart: (product: Product) => {
     const cart = get().cart;
