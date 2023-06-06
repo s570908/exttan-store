@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand";
-import { StoreState } from "../store";
+import { CombinedStoreCreator } from "../store";
 
 export interface Product {
   category: {
@@ -20,12 +20,12 @@ export interface ProductSlice {
   fetchProducts: () => void;
 }
 
-type CombinedStoreCreator<T> = StateCreator<
-  StoreState,
-  [["zustand/devtools", never], ["zustand/persist", unknown]],
-  [],
-  T
->;
+// type CombinedStoreCreator<T> = StateCreator<
+//   StoreState,
+//   [["zustand/devtools", never], ["zustand/persist", unknown]],
+//   [],
+//   T
+// >;
 
 export const createProductSlice: CombinedStoreCreator<ProductSlice> = (set) => ({
   products: [],

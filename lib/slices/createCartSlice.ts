@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 import { Product } from "./createProductSlice";
-import { StoreState } from "../store";
+import { CombinedStoreCreator } from "../store";
 
 export interface CartSlice {
   cart: Product[];
@@ -11,12 +11,12 @@ export interface CartSlice {
   toggleCart: () => void;
 }
 
-type CombinedStoreCreator<T> = StateCreator<
-  StoreState,
-  [["zustand/devtools", never], ["zustand/persist", unknown]],
-  [],
-  T
->;
+// type CombinedStoreCreator<T> = StateCreator<
+//   StoreState,
+//   [["zustand/devtools", never], ["zustand/persist", unknown]],
+//   [],
+//   T
+// >;
 
 export const createCartSlice: CombinedStoreCreator<CartSlice> = (set, get) => ({
   cart: [],
