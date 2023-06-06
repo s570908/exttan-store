@@ -2,6 +2,12 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["fakestoreapi.com", "api.lorem.space", "picsum.photos"],
+    domains: [
+      "fakestoreapi.com",
+      "api.lorem.space",
+      "placeimg.com",
+      "picsum.photos",
+      "thumbs.dreamstime.com",
+    ],
   },
 };
