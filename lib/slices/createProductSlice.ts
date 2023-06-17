@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand";
-import { StoreState } from "../store";
+import { CombinedStoreCreator, StoreState } from "../store";
 
 export interface Product {
   category: {
@@ -20,12 +20,7 @@ export interface ProductSlice {
   fetchProducts: () => void;
 }
 
-export const createProductSlice: StateCreator<
-  StoreState,
-  [["zustand/devtools", never]],
-  [],
-  ProductSlice
-> = (set) => ({
+export const createProductSlice: CombinedStoreCreator<ProductSlice> = (set) => ({
   products: [],
   fetchProducts: async () => {
     const res = await fetch("https://api.escuelajs.co/api/v1/products?offset=0&limit=20");

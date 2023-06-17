@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 import { Product } from "./createProductSlice";
-import { StoreState } from "../store";
+import { CombinedStoreCreator, StoreState } from "../store";
 
 export interface CartSlice {
   cart: Product[];
@@ -11,12 +11,7 @@ export interface CartSlice {
   toggleCart: () => void;
 }
 
-export const createCartSlice: StateCreator<
-  StoreState,
-  [["zustand/devtools", never]],
-  [],
-  CartSlice
-> = (set, get) => ({
+export const createCartSlice: CombinedStoreCreator<CartSlice> = (set, get) => ({
   cart: [],
   addToCart: (product: Product) => {
     const cart = get().cart;
