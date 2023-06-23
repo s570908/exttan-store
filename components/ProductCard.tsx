@@ -11,13 +11,15 @@ export const ProductCard = (product: Product) => {
       <div className="relative w-full h-40">
         <Image
           src={product?.images[0]}
-          loader={loaderProp}
-          alt={product?.title}
+          // loader={loaderProp}
           layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+          alt={product?.title}
           className="rounded-md shadow-lg"
         />
         <span className="bg-black rounded-full py-0.5 px-3 text-white text-xs absolute top-1 left-1 font-light">
-          {product?.category?.name}
+          {product?.category}
         </span>
       </div>
 

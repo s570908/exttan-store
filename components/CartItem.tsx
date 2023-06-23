@@ -29,9 +29,11 @@ export const CartItem = (product: Product) => {
       <div className="w-20 relative">
         <Image
           src={product?.images[0]}
-          loader={loaderProp}
-          alt={product?.title}
+          // loader={loaderProp}
           layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+          alt={product?.title}
           className="rounded-tl-md rounded-bl-md shadow-lg"
         />
       </div>

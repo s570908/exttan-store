@@ -2,11 +2,7 @@ import { StateCreator } from "zustand";
 import { CombinedStoreCreator, StoreState } from "../store";
 
 export interface Product {
-  category: {
-    id: number;
-    image: string;
-    name: string;
-  };
+  category: string;
   description: string;
   id: number;
   images: string[];
@@ -23,7 +19,8 @@ export interface ProductSlice {
 export const createProductSlice: CombinedStoreCreator<ProductSlice> = (set) => ({
   products: [],
   fetchProducts: async () => {
-    const res = await fetch("https://api.escuelajs.co/api/v1/products?offset=0&limit=20");
-    set({ products: await res.json() });
+    const res = await fetch("https://dummyjson.com/products?skip=0&limit=20");
+    const data = await res.json();
+    set({ products: data.products });
   },
 });
