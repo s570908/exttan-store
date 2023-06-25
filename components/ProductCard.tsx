@@ -1,10 +1,13 @@
 import Image from "next/image";
-import { Product } from "../lib/slices/createProductSlice";
-import { useAppStore } from "../lib/store";
-import { loaderProp } from "../lib/imageloader";
+import { Product } from "../store/useProductStore";
+import { useCartStore } from "../store/useCartStore";
 
-export const ProductCard = (product: Product) => {
-  const { addToCart } = useAppStore();
+interface Props {
+  product: Product;
+}
+
+export const ProductCard = ({ product }: Props) => {
+  const addToCart = useCartStore((state) => state.addToCart);
 
   return (
     <div className="rounded-md bg-[#22252D]">
@@ -16,6 +19,7 @@ export const ProductCard = (product: Product) => {
           objectFit="contain"
           objectPosition="center"
           alt={product?.title}
+          priority={true}
           className="rounded-md shadow-lg"
         />
         <span className="bg-black rounded-full py-0.5 px-3 text-white text-xs absolute top-1 left-1 font-light">
@@ -35,7 +39,9 @@ export const ProductCard = (product: Product) => {
           <button
             type="button"
             className="py-1.5 px-3 rounded-md bg-[#161A1E] hover:ring-1 hover:ring-[#161A1E]"
-            onClick={() => addToCart(product)}
+            onClick={() => {
+              addToCart(product);
+            }}
           >
             Add To Cart
           </button>

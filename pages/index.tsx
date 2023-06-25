@@ -1,33 +1,34 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { CartItem } from "../components/CartItem";
-import { ProductCard } from "../components/ProductCard";
-import { Product } from "../lib/slices/createProductSlice";
-import { useAppStore } from "../lib/store";
+import { Product, useProductsStore } from "../store/useProductStore";
+import useFromStore from "../hooks/useFormState";
+import { useCartStore } from "../store/useCartStore";
+import ProductList from "../components/ProductList";
+import Cart from "../components/Cart";
+import CartBadge from "../components/CartBadge";
 
 const Home: NextPage = () => {
-  const { products, fetchProducts, cart, showCart, toggleCart } = useAppStore();
-
-  const [mProducts, setMProducts] = useState<Product[]>([]);
-  const [mCart, setMCart] = useState<Product[]>([]);
-
-  const calculateTotal = () => {
-    return cart.reduce((acc, item) => acc + item.price * item.quantity!, 0);
-  };
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { products, fetchProducts } = useProductsStore();
+  //const [mProducts, setMProducts] = useState<Product[]>([]);
+  // const [mCart, setMCart] = useState<Product[]>([]);
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
   useEffect(() => {
-    setMProducts(products);
+    //setMProducts(products);
   }, [products]);
 
-  useEffect(() => {
-    setMCart(cart);
-    calculateTotal();
-  }, [cart]);
+  // useEffect(() => {
+  //   //setMCart(cart);
+  // }, [cart]);
+
+  const handleCartIconClick = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
 
   return (
     <div className="min-h-screen bg-[#161A1E] relative">
@@ -36,26 +37,26 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="py-8 px-10 xl:px-16">
+      <main className="px-10 py-8 xl:px-16">
         {/* title */}
-        <div className="title flex justify-center">
-          <h1 className="font-bold text-7xl xl:text-9xl text-center inline-block text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500">
+        <div className="flex justify-center title">
+          <h1 className="inline-block font-bold text-center text-transparent text-7xl xl:text-9xl bg-clip-text bg-gradient-to-r from-red-500 to-blue-500">
             exTTan
           </h1>
         </div>
 
         {/* catalogs */}
         <div className="flex items-center justify-between mt-5">
-          <h4 className="font-semibold text-xl xl:text-3xl text-white uppercase">Catalogs</h4>
+          <h4 className="text-xl font-semibold text-white uppercase xl:text-3xl">Catalogs</h4>
           <div className="relative">
             <button
               type="button"
               className="py-1.5 px-3 flex items-center space-x-1 rounded-md text-sm bg-blue-600 text-gray-200 hover:ring-1 hover:ring-blue-600"
-              onClick={toggleCart}
+              onClick={handleCartIconClick}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
+                className="w-4 h-4"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -67,56 +68,23 @@ const Home: NextPage = () => {
               </svg>
               <span>My Cart</span>
             </button>
-            <span className="absolute -right-2 -top-2 bg-amber-400 rounded-full text-xs px-1.5 py-0.5 font-semibold animate-bounce">
-              {mCart?.length}
-            </span>
+            <CartBadge />
           </div>
         </div>
 
         {/* products */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 mt-8">
-          {mProducts?.map((product) => (
-            <ProductCard key={product.id} {...product} />
-          ))}
-        </div>
+        <ProductList products={products} />
       </main>
 
       {/* cart */}
-      <div
-        className={`absolute right-0 top-0 h-full w-1/4 bg-[#1b1c1f] p-5 ${
-          showCart ? "block" : "hidden"
-        }`}
-      >
-        <div className="flex items-center justify-between text-gray-400">
-          <h4 className="font-semibold text-xl xl:text-2xl">My Cart</h4>
-          <button type="button" onClick={toggleCart}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
-        </div>
-        {/* cart items */}
-        {mCart?.map((cartItem) => (
-          <CartItem key={cartItem.id} {...cartItem} />
-        ))}
-        {mCart?.length > 0 && (
-          <div className="mt-5 text-center">
-            <p className="text-gray-500 uppercase">Total</p>
-            <h4 className="font-semibold text-4xl text-white">${calculateTotal()}</h4>
-          </div>
-        )}
-      </div>
+      <Cart isOpen={isDrawerOpen} onCartIconClick={handleCartIconClick} />
     </div>
   );
 };
 
 export default Home;
+
+// <span className="absolute -right-2 -top-2 bg-amber-400 rounded-full text-xs px-1.5 py-0.5 font-semibold animate-bounce">
+// {/* {mCart?.length} */}
+// {cartLength}
+// </span>

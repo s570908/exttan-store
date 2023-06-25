@@ -27,3 +27,10 @@ object-fit은 <img\>, <video\> 의 사이즈가 컨테이너 내부에서 어떻
 
 object-position은 컨테이너 내부에서 <img\>, <video\> 의 위치를 나타냅니다.
 object-position이 ‘center’면 내부 컨텐츠가 컨테이너를 기준으로 중심에 위치하게 됩니다.
+
+# State Optimization
+
+https://javascript.plainenglish.io/building-a-shopping-cart-with-zustand-a-practical-guide-to-react-state-management-with-typescript-73ec10c66fb7
+
+Building a Shopping Cart with Next.js and Zustand: State Management with TypeScript
+을 참조하여 state selector를 구현하였다. state minimization을 react dev tool 로 확인하였다.
