@@ -10,7 +10,8 @@ interface Props {
 }
 
 function Cart({ isOpen, onCartIconClick }: Props) {
-  const cart = useFromStore(useCartStore, (state) => state.cart);
+  //const cart = useFromStore(useCartStore, (state) => state.cart);
+  const cart = useCartStore((state) => state.cart);
 
   let total = 0;
   if (cart) {
