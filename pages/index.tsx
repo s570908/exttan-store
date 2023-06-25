@@ -10,13 +10,13 @@ import CartBadge from "../components/CartBadge";
 
 const Home: NextPage = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { products, fetchProducts } = useProductsStore();
+  const { products, isLoading, error, fetchProducts } = useProductsStore();
   //const [mProducts, setMProducts] = useState<Product[]>([]);
   // const [mCart, setMCart] = useState<Product[]>([]);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
 
   useEffect(() => {
     //setMProducts(products);
@@ -73,7 +73,11 @@ const Home: NextPage = () => {
         </div>
 
         {/* products */}
-        <ProductList products={products} />
+        {isLoading ? (
+          <div className="text-lg text-center">Loading...</div>
+        ) : (
+          <ProductList products={products} />
+        )}
       </main>
 
       {/* cart */}
