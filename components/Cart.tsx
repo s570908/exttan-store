@@ -10,18 +10,18 @@ interface Props {
 }
 
 function Cart({ isOpen, onCartIconClick }: Props) {
-  //const cart = useFromStore(useCartStore, (state) => state.cart);
-  const cart = useCartStore((state) => state.cart);
-  const [mCart, setMCart] = useState<Product[]>([]);
+  const cart = useFromStore(useCartStore, (state) => state.cart);
+  // const cart = useCartStore((state) => state.cart);
+  // const [mCart, setMCart] = useState<Product[]>([]);
 
   let total = 0;
   if (cart) {
     total = cart.reduce((acc, product) => acc + product.price * (product.quantity as number), 0);
   }
 
-  useEffect(() => {
-    setMCart(cart);
-  }, [cart]);
+  // useEffect(() => {
+  //   setMCart(cart);
+  // }, [cart]);
 
   return (
     <div
@@ -47,10 +47,10 @@ function Cart({ isOpen, onCartIconClick }: Props) {
         </button>
       </div>
       {/* cart items */}
-      {mCart?.map((cartItem) => (
+      {cart?.map((cartItem) => (
         <CartItem key={cartItem.id} product={cartItem} />
       ))}
-      {mCart?.length! > 0 && (
+      {cart?.length! > 0 && (
         <div className="mt-5 text-center">
           <p className="text-gray-500 uppercase">Total</p>
           <h4 className="text-4xl font-semibold text-white">${total}</h4>
