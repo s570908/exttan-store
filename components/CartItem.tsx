@@ -107,6 +107,9 @@ const CartItem = ({ product }: Props) => {
           src={product?.images[0]}
           alt={product?.title}
           layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+          priority={true}
           className="shadow-lg rounded-tl-md rounded-bl-md"
         />
       </div>
