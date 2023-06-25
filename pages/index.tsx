@@ -11,20 +11,15 @@ import CartBadge from "../components/CartBadge";
 const Home: NextPage = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { products, isLoading, error, fetchProducts } = useProductsStore();
-  //const [mProducts, setMProducts] = useState<Product[]>([]);
-  // const [mCart, setMCart] = useState<Product[]>([]);
+  const [mProducts, setMProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
 
   useEffect(() => {
-    //setMProducts(products);
+    setMProducts(products);
   }, [products]);
-
-  // useEffect(() => {
-  //   //setMCart(cart);
-  // }, [cart]);
 
   const handleCartIconClick = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -76,7 +71,7 @@ const Home: NextPage = () => {
         {isLoading ? (
           <div className="text-lg text-center">Loading...</div>
         ) : (
-          <ProductList products={products} />
+          <ProductList products={mProducts} />
         )}
       </main>
 
@@ -87,8 +82,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-// <span className="absolute -right-2 -top-2 bg-amber-400 rounded-full text-xs px-1.5 py-0.5 font-semibold animate-bounce">
-// {/* {mCart?.length} */}
-// {cartLength}
-// </span>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useFromStore from "../hooks/useFormState";
 import { useCartStore } from "../store/useCartStore";
 import CartItem from "./CartItem";
@@ -12,11 +12,16 @@ interface Props {
 function Cart({ isOpen, onCartIconClick }: Props) {
   //const cart = useFromStore(useCartStore, (state) => state.cart);
   const cart = useCartStore((state) => state.cart);
+  const [mCart, setMCart] = useState<Product[]>([]);
 
   let total = 0;
   if (cart) {
     total = cart.reduce((acc, product) => acc + product.price * (product.quantity as number), 0);
   }
+
+  useEffect(() => {
+    setMCart(cart);
+  }, [cart]);
 
   return (
     <div
@@ -42,10 +47,10 @@ function Cart({ isOpen, onCartIconClick }: Props) {
         </button>
       </div>
       {/* cart items */}
-      {cart?.map((cartItem) => (
+      {mCart?.map((cartItem) => (
         <CartItem key={cartItem.id} product={cartItem} />
       ))}
-      {cart?.length! > 0 && (
+      {mCart?.length! > 0 && (
         <div className="mt-5 text-center">
           <p className="text-gray-500 uppercase">Total</p>
           <h4 className="text-4xl font-semibold text-white">${total}</h4>
