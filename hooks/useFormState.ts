@@ -17,7 +17,7 @@
 import { useEffect, useState } from "react";
 
 export default function useFromStore<T, F>(
-  store: (callback: (state: T) => F) => F,
+  store: (callback: (state: T) => unknown) => unknown,
   storeCallback: (state: T) => F
 ) {
   const stateOfStore = store(storeCallback) as F;
