@@ -20,8 +20,7 @@ const Home: NextPage = () => {
     isValidating,
   } = useSWRInfinite<ProductPage>(
     (index) => {
-      console.log("useSWRInfinite--getKey.index: ", index);
-      //return `/api/workspaces/${workspace}/dms/${id}/chats?perPage=${PAGE_SIZE}&page=${index + 1}`;
+      // console.log("useSWRInfinite--getKey.index: ", index);
       return `https://dummyjson.com/products?skip=${index * PAGE_SIZE}&limit=${PAGE_SIZE}`;
     },
     fetcher,
@@ -65,8 +64,6 @@ const Home: NextPage = () => {
   const handleCartIconClick = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-
-  console.log("prodectData: ", productData);
 
   const onIntersect: IntersectionObserverCallback = ([entry]) => {
     if (entry.isIntersecting && !isReachingEnd) {
