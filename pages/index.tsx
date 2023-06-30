@@ -101,27 +101,33 @@ const Home: NextPage = () => {
         {/* catalogs */}
         <div className="flex items-center justify-between mt-5">
           <h4 className="text-xl font-semibold text-white uppercase xl:text-3xl">Catalogs</h4>
-          <div className="relative">
-            <button
-              type="button"
-              className="py-1.5 px-3 flex items-center space-x-1 rounded-md text-sm bg-blue-600 text-gray-200 hover:ring-1 hover:ring-blue-600"
-              onClick={handleCartIconClick}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+          <div
+            className={`fixed flex top-28 right-12 z-20 transition-all ${
+              isDrawerOpen ? "hidden" : "block"
+            }`}
+          >
+            <div className="relative">
+              <button
+                type="button"
+                className="py-1.5 px-3 flex items-center space-x-1 rounded-md text-sm bg-blue-600 text-gray-200 hover:ring-1 hover:ring-blue-600"
+                onClick={handleCartIconClick}
               >
-                <path
-                  fillRule="evenodd"
-                  d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <span>My Cart</span>
-            </button>
-            <CartBadge />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span>My Cart</span>
+              </button>
+              <CartBadge />
+            </div>
           </div>
         </div>
 

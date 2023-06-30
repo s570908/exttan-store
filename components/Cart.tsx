@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
 import useFromStore from "../hooks/useFormState";
 import { useCartStore } from "../store/useCartStore";
 import CartItem from "./CartItem";
-import { Product } from "../store/useProductStore";
 
 interface Props {
   isOpen: boolean;
@@ -11,17 +9,11 @@ interface Props {
 
 function Cart({ isOpen, onCartIconClick }: Props) {
   const cart = useFromStore(useCartStore, (state) => state.cart);
-  // const cart = useCartStore((state) => state.cart);
-  // const [mCart, setMCart] = useState<Product[]>([]);
 
   let total = 0;
   if (cart) {
     total = cart.reduce((acc, product) => acc + product.price * (product.quantity as number), 0);
   }
-
-  // useEffect(() => {
-  //   setMCart(cart);
-  // }, [cart]);
 
   return (
     <div
