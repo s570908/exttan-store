@@ -109,7 +109,7 @@ const CartItem = ({ product }: Props) => {
           layout="fill"
           objectFit="contain"
           objectPosition="center"
-          priority={true}
+          //priority={true}
           className="shadow-lg rounded-tl-md rounded-bl-md"
         />
       </div>

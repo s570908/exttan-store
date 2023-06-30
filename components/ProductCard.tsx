@@ -19,7 +19,7 @@ export const ProductCard = ({ product }: Props) => {
           objectFit="contain"
           objectPosition="center"
           alt={product?.title}
-          priority={true}
+          //priority={true}
           className="rounded-md shadow-lg"
         />
         <span className="bg-black rounded-full py-0.5 px-3 text-white text-xs absolute top-1 left-1 font-light">

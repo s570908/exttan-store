@@ -34,3 +34,7 @@ https://javascript.plainenglish.io/building-a-shopping-cart-with-zustand-a-pract
 
 Building a Shopping Cart with Next.js and Zustand: State Management with TypeScript
 을 참조하여 state selector를 구현하였다. state minimization을 react dev tool 로 확인하였다.
+
+# Intersection observer와 useSWRInfinite를 이용해 무한스크롤 구현하기
+
+https://velog.io/@real-bird/Next.js-Intersection-Observer%EB%A1%9C-%EC%9A%94%EC%86%8C-%EA%B0%90%EC%A7%80%ED%95%98%EA%B8%B0

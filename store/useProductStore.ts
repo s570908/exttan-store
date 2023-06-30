@@ -10,6 +10,13 @@ export interface Product {
   quantity?: number;
 }
 
+export interface ProductPage {
+  products: Product[];
+  total: number;
+  skip: number;
+  limit: number;
+}
+
 interface ProductStore {
   products: Product[];
   fetchProducts: () => Promise<void>;
