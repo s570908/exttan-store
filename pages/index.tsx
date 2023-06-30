@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ProductPage } from "../store/useProductStore";
 import ProductList from "../components/ProductList";
 import Cart from "../components/Cart";
@@ -68,6 +68,21 @@ const Home: NextPage = () => {
 
   console.log("prodectData: ", productData);
 
+  const onIntersect: IntersectionObserverCallback = ([entry]) => {
+    if (entry.isIntersecting && !isReachingEnd) {
+      setSize((prev) => prev + 1);
+    }
+  };
+
+  useEffect(() => {
+    if (!target) return;
+    const observer = new IntersectionObserver(onIntersect, {
+      threshold: 0.4,
+    });
+    observer.observe(target.current!);
+    return () => observer && observer.disconnect();
+  }, [target]);
+
   return (
     <div className="min-h-screen bg-[#161A1E] relative">
       <Head>
@@ -117,6 +132,10 @@ const Home: NextPage = () => {
             return <ProductList key={index} products={pageData.products} />;
           })}
       </main>
+
+      <div ref={target} className="w-full h-24 text-white">
+        Loading...
+      </div>
 
       {/* cart */}
       <Cart isOpen={isDrawerOpen} onCartIconClick={handleCartIconClick} />
