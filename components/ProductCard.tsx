@@ -1,10 +1,14 @@
 import Image from "next/image";
-import { Product } from "../lib/slices/createProductSlice";
-import { useAppStore } from "../lib/store";
-import { loaderProp } from "../lib/imageloader";
+import { Product } from "../lib/slices/createProductSliceTmp";
+import { useAppStore } from "../lib/storeTmp";
+import { useCartStore } from "../store/userCartStore";
 
-export const ProductCard = (product: Product) => {
-  const { addToCart } = useAppStore();
+interface Props {
+  product: Product;
+}
+
+export const ProductCard = ({ product }: Props) => {
+  const { addToCart } = useCartStore();
 
   return (
     <div className="rounded-md bg-[#22252D]">

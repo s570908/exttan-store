@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
-import { Product } from "./createProductSlice";
-import { CombinedStoreCreator, StoreState } from "../store";
+import { Product } from "./createProductSliceTmp";
+import { CombinedStoreCreator, StoreState } from "../storeTmp";
 
 export interface CartSlice {
   cart: Product[];

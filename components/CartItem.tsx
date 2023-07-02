@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { Product } from "../lib/slices/createProductSlice";
-import { useAppStore } from "../lib/store";
-import { loaderProp } from "../lib/imageloader";
+import { Product } from "../lib/slices/createProductSliceTmp";
+import { useCartStore } from "../store/userCartStore";
 
 export const CartItem = (product: Product) => {
-  const { updateQuantity, removeFromCart } = useAppStore();
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
 
   return (
     <div className="rounded-md bg-[#22252D] flex my-5 relative">

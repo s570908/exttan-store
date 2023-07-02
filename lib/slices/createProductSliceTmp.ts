@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand";
-import { CombinedStoreCreator, StoreState } from "../store";
+import { CombinedStoreCreator, StoreState } from "../storeTmp";
 
 export interface Product {
   category: string;
