@@ -27,3 +27,16 @@ object-fit은 <img\>, <video\> 의 사이즈가 컨테이너 내부에서 어떻
 
 object-position은 컨테이너 내부에서 <img\>, <video\> 의 위치를 나타냅니다.
 object-position이 ‘center’면 내부 컨텐츠가 컨테이너를 기준으로 중심에 위치하게 됩니다.
+
+# zustand store 를 만들 때 state optimization(rendering을 줄이는 방법)을 하는 방법.
+
+1. set({cart: newCart})
+
+cart: ....
+set({cart: newCart})에서 newCart는 새롭게 만들어진 cart이어야 한다. 즉, cart로부터 deep copy된 새로운 객체이어야 한다.
+
+2. state를 사용할 경우에는 반드시 state selection방식으로 사용한다.
+
+const cart = useCartStore((state)=>state.cart)
+
+3. 여러 개의 store를 만든다. slice형식으로 combine하는 것은 추천하지 않는다.

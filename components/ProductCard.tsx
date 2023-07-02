@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const ProductCard = ({ product }: Props) => {
-  const { addToCart } = useCartStore();
+  const addToCart = useCartStore((state) => state.addToCart);
 
   return (
     <div className="rounded-md bg-[#22252D]">
