@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Product } from "../lib/slices/createProductSliceTmp";
 import { useCartStore } from "../store/userCartStore";
+import { Product } from "../store/useProductStore";
 
 export const CartItem = (product: Product) => {
   const updateQuantity = useCartStore((state) => state.updateQuantity);

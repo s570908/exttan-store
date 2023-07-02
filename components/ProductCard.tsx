@@ -1,7 +1,6 @@
 import Image from "next/image";
-import { Product } from "../lib/slices/createProductSliceTmp";
-import { useAppStore } from "../lib/storeTmp";
 import { useCartStore } from "../store/userCartStore";
+import { Product } from "../store/useProductStore";
 
 interface Props {
   product: Product;

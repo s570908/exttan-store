@@ -1,4 +1,4 @@
-import { Product } from "../lib/slices/createProductSliceTmp";
+import { Product } from "../store/useProductStore";
 import { ProductCard } from "./ProductCard";
 
 interface Props {
