@@ -1,14 +1,17 @@
-import { useCartStore } from "../store/userCartStore";
+import { useEffect, useState } from "react";
+import { CartStore, useCartStore } from "../store/userCartStore";
 import { CartItem } from "./CartItem";
+import { Product } from "../store/useProductStore";
+import useFromStore from "../hooks/useFromStore";
 
 export const Cart = () => {
-  const cart = useCartStore((state) => state.cart);
-  const showCart = useCartStore((state) => state.showCart);
-  const toggleCart = useCartStore((state) => state.toggleCart);
-
+  const mCart = useFromStore<CartStore, Product[]>(useCartStore, (state) => state.cart);
+  const showCart = useFromStore<CartStore, boolean>(useCartStore, (state) => state.showCart);
+  const toggleCart = useFromStore<CartStore, () => void>(useCartStore, (state) => state.toggleCart);
   const calculateTotal = () => {
-    return cart.reduce((acc, item) => acc + item.price * item.quantity!, 0);
+    return mCart?.reduce((acc, item) => acc + item.price * item.quantity!, 0);
   };
+
   return (
     <div
       className={`absolute right-0 top-0 h-full w-1/4 bg-[#1b1c1f] p-5 ${
@@ -16,11 +19,11 @@ export const Cart = () => {
       }`}
     >
       <div className="flex items-center justify-between text-gray-400">
-        <h4 className="font-semibold text-xl xl:text-2xl">My Cart</h4>
+        <h4 className="text-xl font-semibold xl:text-2xl">My Cart</h4>
         <button type="button" onClick={toggleCart}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
+            className="w-5 h-5"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -33,13 +36,13 @@ export const Cart = () => {
         </button>
       </div>
       {/* cart items */}
-      {cart?.map((cartItem) => (
+      {mCart?.map((cartItem) => (
         <CartItem key={cartItem.id} {...cartItem} />
       ))}
-      {cart?.length > 0 && (
+      {mCart?.length! > 0 && (
         <div className="mt-5 text-center">
           <p className="text-gray-500 uppercase">Total</p>
-          <h4 className="font-semibold text-4xl text-white">${calculateTotal()}</h4>
+          <h4 className="text-4xl font-semibold text-white">${calculateTotal()}</h4>
         </div>
       )}
     </div>
