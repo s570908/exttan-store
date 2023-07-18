@@ -1,19 +1,69 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import ProductList from "../components/ProductList";
 import { Cart } from "../components/Cart";
 import { CartBadge } from "../components/CardBadge";
 import { useCartStore } from "../store/userCartStore";
-import { useProductStore } from "../store/useProductStore";
+import useSWRInfinite from "swr/infinite";
+import fetcher from "../utils/fetcher";
 
+const PAGE_SIZE = 6;
 const Home: NextPage = () => {
-  const { products, fetchProducts } = useProductStore();
   const toggleCart = useCartStore((state) => state.toggleCart);
+  const target = useRef<HTMLDivElement>(null);
+
+  const {
+    data: productData,
+    mutate,
+    setSize,
+    isValidating,
+  } = useSWRInfinite<any>(
+    (index) => {
+      return `https://dummyjson.com/products?skip=${index * PAGE_SIZE}&limit=${PAGE_SIZE}`;
+    },
+    fetcher,
+    {
+      onSuccess(data) {
+        console.log("onSuccess--data: ", data);
+      },
+      revalidateOnFocus: false,
+      revalidateFirstPage: false,
+    }
+  );
+  console.log("productData: ", productData);
+  /*
+  useSWRInfinite
+  
+   optional chaining ?.[i] 사용됨: array?.[i]  좌측 operand가 null undefined 이 아니면 array[i]를 가져와라.
+   productData는 최대 10개의 product을 갖고 있는 array이다.
+   productData[0] 에 10개의 product
+   productData[1] 에 10개의 product
+   productData[2] 에 10개의 product
+   productData[3] 에 4개의 product
+   productData = 
+    [ 
+      [{id:1}, ..., {id:10}], 
+      [{id:11}, ..., {id:20}], 
+      [{id:21}, ..., {id:30}], 
+      [{id:31}, ..., {id:34}]
+    ]
+  */
+
+  const isEmpty = productData?.[0].products.length === 0;
+  const isReachingEnd =
+    isEmpty || (productData && productData[productData.length - 1]?.products < PAGE_SIZE);
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    if (!target) return;
+    const observer = new IntersectionObserver(([e]) => {
+      console.log("Inter.Observer callback called--e: ", e);
+      if (e.isIntersecting && !isReachingEnd) {
+        setSize((prev) => prev + 1);
+      }
+    });
+    observer.observe(target.current!);
+  }, [target]);
 
   return (
     <div className="min-h-screen bg-[#161A1E] relative">
@@ -22,17 +72,17 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="py-8 px-10 xl:px-16">
+      <main className="px-10 py-8 xl:px-16">
         {/* title */}
-        <div className="title flex justify-center">
-          <h1 className="font-bold text-7xl xl:text-9xl text-center inline-block text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500">
+        <div className="flex justify-center title">
+          <h1 className="inline-block font-bold text-center text-transparent text-7xl xl:text-9xl bg-clip-text bg-gradient-to-r from-red-500 to-blue-500">
             exTTan
           </h1>
         </div>
 
         {/* catalogs */}
         <div className="flex items-center justify-between mt-5">
-          <h4 className="font-semibold text-xl xl:text-3xl text-white uppercase">Catalogs</h4>
+          <h4 className="text-xl font-semibold text-white uppercase xl:text-3xl">Catalogs</h4>
           <div className="relative">
             <button
               type="button"
@@ -41,7 +91,7 @@ const Home: NextPage = () => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
+                className="w-4 h-4"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -58,8 +108,18 @@ const Home: NextPage = () => {
         </div>
 
         {/* products */}
-        <ProductList products={products} />
+        {productData &&
+          productData.map((pageData, index) => {
+            console.log("pageData.products: ", pageData.products);
+            return <ProductList key={index} products={pageData.products} />;
+          })}
       </main>
+
+      {isReachingEnd || (
+        <div ref={target} className="w-full h-24 text-white">
+          Loading...
+        </div>
+      )}
 
       {/* cart */}
       <Cart />

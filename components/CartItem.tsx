@@ -5,6 +5,8 @@ import { Product } from "../store/useProductStore";
 export const CartItem = (product: Product) => {
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const blurDataURL =
+    "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg==";
 
   return (
     <div className="rounded-md bg-[#22252D] flex my-5 relative">
@@ -15,7 +17,7 @@ export const CartItem = (product: Product) => {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 text-red-500"
+          className="w-4 h-4 text-red-500"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -26,30 +28,32 @@ export const CartItem = (product: Product) => {
           />
         </svg>
       </button>
-      <div className="w-20 relative">
+      <div className="relative w-20">
         <Image
           src={product?.images[0]}
           // loader={loaderProp}
           layout="fill"
           objectFit="contain"
           objectPosition="center"
+          placeholder="blur"
+          blurDataURL={blurDataURL}
           alt={product?.title}
-          className="rounded-tl-md rounded-bl-md shadow-lg"
+          className="shadow-lg rounded-tl-md rounded-bl-md"
         />
       </div>
-      <div className="details py-2 px-3 flex-grow">
-        <h3 className="font-medium mb-1 text-gray-300">{product?.title}</h3>
+      <div className="flex-grow px-3 py-2 details">
+        <h3 className="mb-1 font-medium text-gray-300">{product?.title}</h3>
         <p className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500">
           ${product?.price}
         </p>
         <div className="flex items-center justify-between">
           <p className="text-sm text-gray-300">Qty: {product?.quantity}</p>
 
-          <div className="flex items-center justify-end space-x-2 flex-grow text-gray-300">
+          <div className="flex items-center justify-end flex-grow space-x-2 text-gray-300">
             <button type="button" onClick={() => updateQuantity(product?.id, "decrease")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="w-5 h-5"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -64,7 +68,7 @@ export const CartItem = (product: Product) => {
             <button type="button" onClick={() => updateQuantity(product?.id, "increase")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="w-5 h-5"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >

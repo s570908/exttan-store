@@ -8,6 +8,8 @@ interface Props {
 
 export const ProductCard = ({ product }: Props) => {
   const addToCart = useCartStore((state) => state.addToCart);
+  const blurDataURL =
+    "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg==";
 
   return (
     <div className="rounded-md bg-[#22252D]">
@@ -18,6 +20,8 @@ export const ProductCard = ({ product }: Props) => {
           layout="fill"
           objectFit="contain"
           objectPosition="center"
+          placeholder="blur"
+          blurDataURL={blurDataURL}
           alt={product?.title}
           className="rounded-md shadow-lg"
         />
