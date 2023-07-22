@@ -40,3 +40,8 @@ set({cart: newCart})에서 newCart는 새롭게 만들어진 cart이어야 한�
 const cart = useCartStore((state)=>state.cart)
 
 3. 여러 개의 store를 만든다. slice형식으로 combine하는 것은 추천하지 않는다.
+
+# next.js에서 이미지 스켈레톤 처리하기- BlurHash 사용예제
+
+https://velog.io/@sangbooom/next.js-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%8A%A4%EC%BC%88%EB%A0%88%ED%86%A4-%EC%B2%98%EB%A6%AC%ED%95%98%EA%B8%B0
+
