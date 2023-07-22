@@ -7,8 +7,6 @@ export interface CartStore {
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, action: "increase" | "decrease") => void;
-  showCart: boolean;
-  toggleCart: () => void;
 }
 
 export const useCartStore = create<
@@ -43,11 +41,6 @@ export const useCartStore = create<
           }
         }
         set({ cart: JSON.parse(JSON.stringify(cart)) });
-      },
-      showCart: false,
-      toggleCart: () => {
-        console.log("toggleCart called");
-        set({ showCart: !get().showCart });
       },
     }))
   )

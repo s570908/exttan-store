@@ -1,16 +1,17 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductList from "../components/ProductList";
 import { Cart } from "../components/Cart";
 import { CartBadge } from "../components/CardBadge";
-import { useCartStore } from "../store/userCartStore";
+import { CartStore, useCartStore } from "../store/userCartStore";
 import useSWRInfinite from "swr/infinite";
 import fetcher from "../utils/fetcher";
+import useFromStore from "../hooks/useFromStore";
 
 const PAGE_SIZE = 6;
 const Home: NextPage = () => {
-  const toggleCart = useCartStore((state) => state.toggleCart);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const target = useRef<HTMLDivElement>(null);
 
   const {
@@ -50,6 +51,10 @@ const Home: NextPage = () => {
     ]
   */
 
+  const handleCartIconClick = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
   const isEmpty = productData?.[0].products.length === 0;
   const isReachingEnd =
     isEmpty || (productData && productData[productData.length - 1]?.products < PAGE_SIZE);
@@ -83,11 +88,15 @@ const Home: NextPage = () => {
         {/* catalogs */}
         <div className="flex items-center justify-between mt-5">
           <h4 className="text-xl font-semibold text-white uppercase xl:text-3xl">Catalogs</h4>
-          <div className="relative">
+          <div
+            className={`fixed z-20 transition-all top-28 right-8 ${
+              isDrawerOpen ? "hidden" : "border-t-black"
+            }`}
+          >
             <button
               type="button"
               className="py-1.5 px-3 flex items-center space-x-1 rounded-md text-sm bg-blue-600 text-gray-200 hover:ring-1 hover:ring-blue-600"
-              onClick={toggleCart}
+              onClick={handleCartIconClick}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -122,7 +131,7 @@ const Home: NextPage = () => {
       )}
 
       {/* cart */}
-      <Cart />
+      <Cart isOpen={isDrawerOpen} onCartIconClick={handleCartIconClick} />
     </div>
   );
 };

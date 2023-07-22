@@ -4,10 +4,13 @@ import { CartItem } from "./CartItem";
 import { Product } from "../store/useProductStore";
 import useFromStore from "../hooks/useFromStore";
 
-export const Cart = () => {
+interface Props {
+  isOpen: boolean;
+  onCartIconClick: () => void;
+}
+
+export const Cart = ({ isOpen, onCartIconClick }: Props) => {
   const mCart = useFromStore<CartStore, Product[]>(useCartStore, (state) => state.cart);
-  const showCart = useFromStore<CartStore, boolean>(useCartStore, (state) => state.showCart);
-  const toggleCart = useFromStore<CartStore, () => void>(useCartStore, (state) => state.toggleCart);
   const calculateTotal = () => {
     return mCart?.reduce((acc, item) => acc + item.price * item.quantity!, 0);
   };
@@ -15,12 +18,12 @@ export const Cart = () => {
   return (
     <div
       className={`absolute right-0 top-0 h-full w-1/4 bg-[#1b1c1f] p-5 ${
-        showCart ? "block" : "hidden"
+        isOpen ? "block" : "hidden"
       }`}
     >
       <div className="flex items-center justify-between text-gray-400">
         <h4 className="text-xl font-semibold xl:text-2xl">My Cart</h4>
-        <button type="button" onClick={toggleCart}>
+        <button type="button" onClick={onCartIconClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-5 h-5"
